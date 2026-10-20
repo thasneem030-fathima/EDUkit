@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Checkout</h2>
+{% include '_totals.html' %}
+<form method='post' class='box'>
+  <label>Delivery address</label><textarea name='address' required></textarea>
+  <label>School / College / Company name (for bulk orders)</label><input name='institution'>
+  <h4>Payment (demo – no real money)</h4>
+  <input placeholder='Card number (any digits)' required><input placeholder='MM/YY' required>
+  <button class='btn'>Pay ₹{{ '%.2f'|format(total) }}</button>
+</form>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% block content %}
+<div class='two'>
+  <div>
+    {% if p.image %}<img class='big' src='/static/uploads/{{ p.image }}' alt=''>{% endif %}
+    <p class='muted'>Live preview</p>
+    <div id='preview' class='preview'><img id='plogo' hidden alt=''><span id='ptext'></span></div>
+  </div>
+  <div>
+    <h2>{{ p.name }}</h2><p class='muted'>{{ p.category }}</p><p>{{ p.description }}</p>
+    <h3>₹{{ '%.0f'|format(p.price) }}</h3>
+    {% if p.stock > 0 %}
+    <form method='post' action='/cart/add/{{ p.id }}' enctype='multipart/form-data'>
+      <label>Size (see <a href='/size-chart'>size chart</a>)</label>
+      <select name='size'>{% for s in ['XS','S','M','L','XL','XXL'] %}<option>{{ s }}</option>{% endfor %}</select>
+      <label>Colour</label>
+      <select name='colour' id='colour'>{% for c in ['White','Navy','Black','Red','Green','Yellow'] %}<option>{{ c }}</option>{% endfor %}</select>
+      <label>Quantity (10+ items get a bulk discount)</label>
+      <input type='number' name='qty' value='1' min='1' max='{{ p.stock }}'>
+      {% if p.customizable %}
+      <label>Custom text (name / number / school)</label><input name='text' id='text' maxlength='40'>
+      <label>Upload logo</label><input type='file' name='logo' id='logo' accept='image/*'>
+      {% endif %}
+      <button class='btn'>Add to Cart</button>
+    </form>
+    {% else %}<p class='red'>Out of stock</p>{% endif %}
+  </div>
+</div>
+{% endblock %}

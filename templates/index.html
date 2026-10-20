@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}
+<section class='hero'><h1>Uniforms, Apparel, Stationery &amp; Corporate Gifts</h1>
+<p>One place for schools, colleges and companies.</p>
+<a class='btn' href='/products'>Shop Now</a> <a class='btn alt' href='/bulk'>Bulk Orders</a></section>
+<h2>Categories</h2>
+<div class='grid'>{% for c in cats %}<a class='card' href='/products?category={{ c|urlencode }}'><div class='ph'>{{ EMOJI[c] }}</div><h4>{{ c }}</h4></a>{% endfor %}</div>
+<h2>New Arrivals</h2>
+<div class='grid'>{% for p in feat %}{% include '_card.html' %}{% endfor %}</div>
+{% endblock %}

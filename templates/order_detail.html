@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Order #{{ o.id }}</h2>
+<p>Placed: {{ o.created }} · Payment: Paid (demo) · Ship to: {{ o.address }}</p>
+{% if o.status == 'Cancelled' %}<p class='red'>This order was cancelled.</p>
+{% else %}<div class='steps'>{% for s in ['Placed','Packed','Shipped','Delivered'] %}<span class='{{ 'done' if loop.index0 <= idx else '' }}'>{{ s }}</span>{% endfor %}</div>{% endif %}
+<table><tr><th>Item</th><th>Details</th><th>Qty</th><th>Price</th></tr>
+{% for i in items %}<tr><td>{{ i.name }}</td><td>{{ i.size }} {{ i.colour }} {{ i.custom_text }}</td><td>{{ i.qty }}</td><td>₹{{ '%.0f'|format(i.price) }}</td></tr>{% endfor %}
+</table>
+<p>Discount: ₹{{ '%.2f'|format(o.discount) }}</p><h3>Total paid: ₹{{ '%.2f'|format(o.total) }}</h3>
+{% endblock %}

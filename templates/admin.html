@@ -1,0 +1,52 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="grid" style="grid-template-columns: 1fr 1fr;">
+  <div class="box">
+    <h3>Total Orders: {{ stats.n }}</h3>
+    <p>Revenue: ₹{{ '%.2f'|format(stats.rev) }}</p>
+  </div>
+  <div class="box">
+    <h3>Top Selling Products</h3>
+    {% for t in top %}<p>{{ t.name }} - {{ t.units }} units</p>{% else %}<p>No sales yet</p>{% endfor %}
+  </div>
+</div>
+
+<h3>Manage Products <a class="btn" href="/admin/product">+ Add New Product</a></h3>
+<table>
+<tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Action</th></tr>
+{% for p in prods %}
+<tr>
+<td>{{ p.id }}</td><td>{{ p.name }}</td><td>{{ p.category }}</td><td>₹{{ p.price }}</td><td>{{ p.stock }}</td>
+<td>
+<a href="/admin/product/{{ p.id }}">Edit</a> |
+<form method="post" action="/admin/delete/{{ p.id }}" style="display:inline" onsubmit="return confirm('Delete?')"><button type="submit">Delete</button></form>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>All Orders</h3>
+<table>
+<tr><th>Order ID</th><th>User</th><th>Total</th><th>Status</th><th>Update Status</th></tr>
+{% for o in orders %}
+<tr>
+<td>#{{ o.id }}</td><td>{{ o.uname }}</td><td>₹{{ o.total }}</td><td>{{ o.status }}</td>
+<td>
+<form method="post" action="/admin/order/{{ o.id }}">
+<select name="status">
+{% for s in statuses %}<option {% if s==o.status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+</select>
+<button>Update</button>
+</form>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Users</h3>
+<table>
+<tr><th>Name</th><th>Email</th><th>Institution</th></tr>
+{% for u in users %}<tr><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.institution }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

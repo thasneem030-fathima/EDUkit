@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>EduKit</title>
+<link rel='stylesheet' href='/static/css/style.css'>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+<nav>
+  <a class='brand' href='/'>🎓 EduKit</a>
+  <a href='/products'>Shop</a><a href='/bulk'>Bulk Orders</a><a href='/size-chart'>Size Chart</a>
+  <form class='search' action='/products'><input name='q' placeholder='Search products'><button>Go</button></form>
+  <a href='/cart'>🛒 Cart ({{ cart_count }})</a>
+  {% if session.uid %}
+    <a href='/orders'>My Orders</a>
+    {% if session.admin %}<a href='/admin'>Admin</a>{% endif %}
+    <a href='/logout'>Logout ({{ session.uname }})</a>
+  {% else %}<a href='/login'>Login</a><a href='/register'>Register</a>{% endif %}
+</nav>
+<main>
+{% for m in get_flashed_messages() %}<div class='flash'>{{ m }}</div>{% endfor %}
+{% block content %}{% endblock %}
+</main>
+<footer>EduKit · built for BillionProducts.in</footer>
+<script src='/static/js/main.js'></script>
+</body>
+</html>

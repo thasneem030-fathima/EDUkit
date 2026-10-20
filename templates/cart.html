@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Your Cart</h2>
+{% if items %}
+<table><tr><th>Item</th><th>Details</th><th>Qty</th><th>Amount</th><th></th></tr>
+{% for i in items %}<tr><td>{{ i.p.name }}</td>
+<td>{{ i.size }} {{ i.colour }}{% if i.text %} · text: {{ i.text }}{% endif %}{% if i.logo %} · logo attached{% endif %}</td>
+<td>{{ i.qty }}</td><td>₹{{ '%.0f'|format(i.line) }}</td><td><a href='/cart/remove/{{ i.idx }}'>Remove</a></td></tr>{% endfor %}
+</table>
+{% include '_totals.html' %}
+<a class='btn' href='/checkout'>Proceed to Checkout</a>
+{% else %}<p>Your cart is empty. <a href='/products'>Start shopping</a></p>{% endif %}
+{% endblock %}

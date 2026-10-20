@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Shop</h2>
+<form class='filters'>
+  <select name='category'><option value=''>All categories</option>
+    {% for c in cats %}<option {{ 'selected' if c == cat }}>{{ c }}</option>{% endfor %}</select>
+  <input name='q' value='{{ s }}' placeholder='Search'>
+  <input name='max' type='number' value='{{ mx }}' placeholder='Max price'>
+  <button class='btn'>Filter</button>
+</form>
+<div class='grid'>{% for p in items %}{% include '_card.html' %}{% else %}<p>No products found.</p>{% endfor %}</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}{% block content %}
+<h2>{% if p %}Edit Product #{{ p.id }}{% else %}Add New Product{% endif %}</h2>
+<form method="post" class="box" enctype="multipart/form-data">
+  <label>Product Name</label>
+  <input name="name" value="{{ p.name if p else '' }}" required>
+  
+  <label>Category</label>
+  <select name="category" required>
+    {% for c in cats %}
+    <option {% if p and p.category==c %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  
+  <label>Description</label>
+  <textarea name="description" required>{{ p.description if p else '' }}</textarea>
+  
+  <label>Price (₹)</label>
+  <input type="number" step="0.01" name="price" value="{{ p.price if p else '' }}" required>
+  
+  <label>Stock Quantity</label>
+  <input type="number" name="stock" value="{{ p.stock if p else '100' }}" required>
+  
+  <label>Product Image (optional)</label>
+  <input type="file" name="image" accept="image/*">
+  {% if p and p.image %}<p class="muted">Current: {{ p.image }}</p>{% endif %}
+  
+  <label><input type="checkbox" name="customizable" {% if p and p.customizable %}checked{% endif %}> Allow Customization (logo/text)</label>
+  
+  <button class="btn">Save Product</button>
+  <a class="btn alt" href="/admin">Cancel</a>
+</form>
+{% endblock %}

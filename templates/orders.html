@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}
+<h2>My Orders</h2>
+<table><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr>
+{% for o in orders %}<tr><td><a href='/order/{{ o.id }}'>#{{ o.id }}</a></td><td>{{ o.created }}</td>
+<td>₹{{ '%.0f'|format(o.total) }}</td><td>{{ o.status }}</td></tr>{% else %}<tr><td colspan='4'>No orders yet.</td></tr>{% endfor %}
+</table>
+{% endblock %}

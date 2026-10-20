@@ -1,0 +1,5 @@
+<a class='card' href='/product/{{ p.id }}'>
+  {% if p.image %}<img src='/static/uploads/{{ p.image }}' alt='{{ p.name }}'>
+  {% else %}<div class='ph'>{{ EMOJI.get(p.category, '📦') }}</div>{% endif %}
+  <h4>{{ p.name }}</h4><p class='muted'>{{ p.category }}</p><b>₹{{ '%.0f'|format(p.price) }}</b>
+</a>
